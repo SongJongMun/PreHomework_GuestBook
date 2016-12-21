@@ -11,6 +11,10 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 public class LoggerInterceptor extends HandlerInterceptorAdapter {
     protected Log log = LogFactory.getLog(LoggerInterceptor.class);
      
+    /**
+     * Client -> Controller 전처리기 PreHandle
+     * Log4j를 사용해서 로그 출력, 현재 호출된 URI 호출
+     */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if (log.isDebugEnabled()) {
@@ -20,6 +24,9 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter {
         return super.preHandle(request, response, handler);
     }
      
+    /**
+     * Controller->Client 후처리기 PostHandle
+     */
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         if (log.isDebugEnabled()) {

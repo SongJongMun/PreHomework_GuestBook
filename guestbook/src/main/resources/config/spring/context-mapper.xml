@@ -4,12 +4,15 @@
     xmlns:context="http://www.springframework.org/schema/context"
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
                         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
- 
+ 	
+ 	<!-- sqlSession Bean에서 context-datasource.xml에서 작성한 dataSource(Info)와 *_SQL.xml(앞으로 상용할 SQL문)문서를 참조 -->
     <bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="mapperLocations" value="classpath:/mapper/**/*_SQL.xml" />
     </bean>
-     
+    
+    <!-- Mybatis - Spring 연동 모듈의 핵심 -->
+    <!-- sqlSessionTemplate은 SqlSession을 구현하고, 코드에서 sqlSession을 대체하는 역활 -->
     <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
         <constructor-arg index="0" ref="sqlSession"/>
     </bean>  

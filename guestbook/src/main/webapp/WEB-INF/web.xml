@@ -5,6 +5,7 @@
 
 
 	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
+	<!-- 최초에 서버가 시작 될 때, 해당 위치에 존재하는 context-* 형식으로 된 모든 xml 파일을 Read -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath*:config/spring/context-*.xml</param-value>
@@ -16,6 +17,8 @@
 	</listener>
 
 	<!-- Processes application requests -->
+	<!-- Servlet 설정 파일  Read, 특정 폴더에 있는 설정 파일을 모두 읽어옴 -->
+	<!-- aciont-servlet.xml에 interceptor를 설정하여 DispatcherServlet과 Interceptor를 같은 위치에 등록함 -->
 	<servlet>
 		<servlet-name>action</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -26,10 +29,12 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 		
+	<!-- 웹사이트를 들어가면 바로 실행되는 페에지 정의 - 현재 : localhost:8080/guestbook -->
 	<welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
     
+    <!-- Servlet을 통해 요청할 때 *.do를 통해서만 요청을 전달하고, *.html 등의 외부적 요청으로 인한 직접적인 호출은 허락하지 않음 -->
 	<servlet-mapping>
 		<servlet-name>action</servlet-name>
 		<url-pattern>*.do</url-pattern>
