@@ -19,9 +19,9 @@ import nhn.common.common.CommandMap;
 /**
  * 
  * @author skuug
- * Annotation Controller : ½ºÇÁ¸µ ÇÁ·¹ÀÓ¿öÅ©¿¡ ÇöÀç Å¬·¡½º°¡ ÄÁÆ®·Ñ·¯ ¶ó´Â °ÍÀ» ¸í½ÃÇÔ
- * ÄÁÆ®·Ñ·¯(Controller)´Â À¥ Å¬¶óÀÌ¾ğÆ®¿¡¼­ µé¾î¿Â ¿äÃ»À» ÇØ´ç ºñÁö´Ï½º ·ÎÁ÷À» È£ÃâÇÏ°í, ¼öÇà°á°ú¿Í ÇÔ²² ÀÀ´äÀ» ÇØÁÖ´Â Dispatcher ¿ªÇÒÀ» ÇÑ´Ù. 
- * Å¬·¡½ºÀÇ ¼±¾ğºÎ¿¡ @Controller ¾î³ëÅ×ÀÌ¼Ç(Annotation)À» ÀÌ¿ëÇÏ¿©, Controller °´Ã¼ÀÓÀ» ¼±¾ğÇÑ´Ù. 
+ * Annotation Controller : ìŠ¤í”„ë§ í”„ë ˆì„ì›Œí¬ì— í˜„ì¬ í´ë˜ìŠ¤ê°€ ì»¨íŠ¸ë¡¤ëŸ¬ ë¼ëŠ” ê²ƒì„ ëª…ì‹œí•¨
+ * ì»¨íŠ¸ë¡¤ëŸ¬(Controller)ëŠ” ì›¹ í´ë¼ì´ì–¸íŠ¸ì—ì„œ ë“¤ì–´ì˜¨ ìš”ì²­ì„ í•´ë‹¹ ë¹„ì§€ë‹ˆìŠ¤ ë¡œì§ì„ í˜¸ì¶œí•˜ê³ , ìˆ˜í–‰ê²°ê³¼ì™€ í•¨ê»˜ ì‘ë‹µì„ í•´ì£¼ëŠ” Dispatcher ì—­í• ì„ í•œë‹¤. 
+ * í´ë˜ìŠ¤ì˜ ì„ ì–¸ë¶€ì— @Controller ì–´ë…¸í…Œì´ì…˜(Annotation)ì„ ì´ìš©í•˜ì—¬, Controller ê°ì²´ì„ì„ ì„ ì–¸í•œë‹¤. 
  */
 
 @Controller
@@ -29,10 +29,10 @@ public class SampleController {
 	Logger log = Logger.getLogger(this.getClass());
 
 	/**
-	 * Service ¿µ¿ªÀÇ Á¢±ÙÀ» À§ÇÑ ¼±¾ğ
-	 * SampeServiceImplÀ» »ı¼ºÇÏ°í ±× Service¸¦ "sampleService"¶ó´Â ÀÌ¸§À¸·Î ¼±¾ğÀ» ÇÏ¿´´Âµ¥, ÀÌ¸¦ »ç¿ëÇÏ±â À§ÇÑ ¼±¾ğ.
-	 * @Resource¾î³ëÅ×ÀÌ¼ÇÀ» ÅëÇØ¼­ ÇÊ¿äÇÑ ºó(bean)À» ¼öµ¿À¸·Î µî·ÏÇÏ´Â °Í. 
-	 * ¼öµ¿À¸·Î µî·ÏÇÒ ºóÀÇ ÀÌ¸§ÀÌ "sampleService"ÀÌ°í, ÀÌ´Â @Service("sampleService")¶ó°í ¼±¾ğÇßÀ» ¶§ÀÇ ±× ÀÌ¸§ÀÎ°ÍÀ» È®ÀÎ
+	 * Service ì˜ì—­ì˜ ì ‘ê·¼ì„ ìœ„í•œ ì„ ì–¸
+	 * SampeServiceImplì„ ìƒì„±í•˜ê³  ê·¸ Serviceë¥¼ "sampleService"ë¼ëŠ” ì´ë¦„ìœ¼ë¡œ ì„ ì–¸ì„ í•˜ì˜€ëŠ”ë°, ì´ë¥¼ ì‚¬ìš©í•˜ê¸° ìœ„í•œ ì„ ì–¸.
+	 * @Resourceì–´ë…¸í…Œì´ì…˜ì„ í†µí•´ì„œ í•„ìš”í•œ ë¹ˆ(bean)ì„ ìˆ˜ë™ìœ¼ë¡œ ë“±ë¡í•˜ëŠ” ê²ƒ. 
+	 * ìˆ˜ë™ìœ¼ë¡œ ë“±ë¡í•  ë¹ˆì˜ ì´ë¦„ì´ "sampleService"ì´ê³ , ì´ëŠ” @Service("sampleService")ë¼ê³  ì„ ì–¸í–ˆì„ ë•Œì˜ ê·¸ ì´ë¦„ì¸ê²ƒì„ í™•ì¸
 	 */
 	@Resource(name = "sampleService")
 	private SampleService sampleService;
@@ -43,14 +43,14 @@ public class SampleController {
 	 * @return mv(ModelAndView Class Instance)
 	 * @throws Exception
 	 * 
-	 * Annotation Requestmapping : DisptacherServletÀº  ÇØ´ç ¾î³ëÅ×ÀÌ¼ÇÀ» ±âÁØÀ¸·Î ¾î¶² ÄÁÆ®·Ñ·¯ÀÇ ¸Ş¼Òµå°¡ È£ÃâµÇ¾î¾ß ÇÒÁö °áÁ¤
-	 * value="/sample/openSampleList.do"´Â ÇÁ·ÎÁ§Æ®°¡ ½ÇÇàµÉ ÁÖ¼Ò¸¦ ÀÇ¹ÌÇÑ´Ù.
+	 * Annotation Requestmapping : DisptacherServletì€  í•´ë‹¹ ì–´ë…¸í…Œì´ì…˜ì„ ê¸°ì¤€ìœ¼ë¡œ ì–´ë–¤ ì»¨íŠ¸ë¡¤ëŸ¬ì˜ ë©”ì†Œë“œê°€ í˜¸ì¶œë˜ì–´ì•¼ í• ì§€ ê²°ì •
+	 * value="/sample/openSampleList.do"ëŠ” í”„ë¡œì íŠ¸ê°€ ì‹¤í–‰ë  ì£¼ì†Œë¥¼ ì˜ë¯¸í•œë‹¤.
 	 */
 	@RequestMapping(value="/sample/openSampleList.do")
     public ModelAndView openSampleList(Map<String,Object> commandMap) throws Exception{
-        //»ı¼ºÀÚ ÀÎÀÚ : ÇØ´ç ÄÁÆ®·Ñ·¯°¡ ½ÇÇàµÇ°í ³ª¼­ º¸¿©ÁÙ View¸¦ ¼³Á¤
+        //ìƒì„±ì ì¸ì : í•´ë‹¹ ì»¨íŠ¸ë¡¤ëŸ¬ê°€ ì‹¤í–‰ë˜ê³  ë‚˜ì„œ ë³´ì—¬ì¤„ Viewë¥¼ ì„¤ì •
 		ModelAndView mv = new ModelAndView("");
-        log.debug("ÀÎÅÍ¼ÁÅÍ Å×½ºÆ®");
+        log.debug("ì¸í„°ì…‰í„° í…ŒìŠ¤íŠ¸");
          
         return mv;
     }
@@ -62,18 +62,18 @@ public class SampleController {
 	 * @return
 	 * @throws Exception
 	 * 
-	 * @RequestMappingÀº ¿äÃ» URLÀ» ÀÇ¹Ì, /sample/openSampleBoardList.do ¶ó´Â ÁÖ¼Ò¸¦ È£ÃâÇÏ°Ô µÇ¸é, ÀÌ ÁÖ¼Ò´Â @RequestMapping ¾î³ëÅ×ÀÌ¼Ç°ú ¸ÅÇÎµÇ¾î, ÇØ´ç ¸Ş¼­µå°¡ ½ÇÇàµÈ´Ù.
+	 * @RequestMappingì€ ìš”ì²­ URLì„ ì˜ë¯¸, /sample/openSampleBoardList.do ë¼ëŠ” ì£¼ì†Œë¥¼ í˜¸ì¶œí•˜ê²Œ ë˜ë©´, ì´ ì£¼ì†ŒëŠ” @RequestMapping ì–´ë…¸í…Œì´ì…˜ê³¼ ë§¤í•‘ë˜ì–´, í•´ë‹¹ ë©”ì„œë“œê°€ ì‹¤í–‰ëœë‹¤.
 	 * 
 	 */
 	@RequestMapping(value = "/sample/openSampleBoardList.do")
 	public ModelAndView openSampleBoardList(Map<String, Object> commandMap) throws Exception {
-		//È­¸é¿¡ º¸¿©ÁÙ jspÆÄÀÏÀ» ÀÇ¹Ì
+		//í™”ë©´ì— ë³´ì—¬ì¤„ jspíŒŒì¼ì„ ì˜ë¯¸
 		ModelAndView mv = new ModelAndView("/sample/boardList");
 
 		/**
-		 * ±Û¹øÈ£, ±ÛÁ¦¸ñ, ÀÛ¼ºÀÏ µîÀÇ ³»¿ëÀ» Map¿¡ ÀúÀå, MapÀº ´Ù½Ã Å°(key)¿Í °ª(value)·Î ±¸ºĞµÇ¾îÁö´Âµ¥, °¢°¢ÀÇ ÄÃ·³ÀÎ ±Û¹øÈ£, ±ÛÁ¦¸ñ, ÀÛ¼ºÀÏ µîÀÇ Å°¿Í ½ÇÁ¦ °ªÀÌ ÀúÀåµÈ´Ù.
-		 * Service¿¡¼­ ºñÁî´Ï½º ·ÎÁ÷À» È£ÃâÇÏ¿© Ã³¸®ÇÒ ¼ö ÀÖµµ·Ï ÇÔ.
-		 * ¼­ºñ½º·ÎÁ÷ÀÇ °á°ú¸¦ ModelAndView °´Ã¼¿¡ ´ã¾Æ¼­ Å¬¶óÀÌ¾ğÆ®, Áï jsp¿¡¼­ ±× °á°ú¸¦ »ç¿ëÇÒ ¼ö ÀÖµµ·Ï ÇÑ´Ù.
+		 * ê¸€ë²ˆí˜¸, ê¸€ì œëª©, ì‘ì„±ì¼ ë“±ì˜ ë‚´ìš©ì„ Mapì— ì €ì¥, Mapì€ ë‹¤ì‹œ í‚¤(key)ì™€ ê°’(value)ë¡œ êµ¬ë¶„ë˜ì–´ì§€ëŠ”ë°, ê°ê°ì˜ ì»¬ëŸ¼ì¸ ê¸€ë²ˆí˜¸, ê¸€ì œëª©, ì‘ì„±ì¼ ë“±ì˜ í‚¤ì™€ ì‹¤ì œ ê°’ì´ ì €ì¥ëœë‹¤.
+		 * Serviceì—ì„œ ë¹„ì¦ˆë‹ˆìŠ¤ ë¡œì§ì„ í˜¸ì¶œí•˜ì—¬ ì²˜ë¦¬í•  ìˆ˜ ìˆë„ë¡ í•¨.
+		 * ì„œë¹„ìŠ¤ë¡œì§ì˜ ê²°ê³¼ë¥¼ ModelAndView ê°ì²´ì— ë‹´ì•„ì„œ í´ë¼ì´ì–¸íŠ¸, ì¦‰ jspì—ì„œ ê·¸ ê²°ê³¼ë¥¼ ì‚¬ìš©í•  ìˆ˜ ìˆë„ë¡ í•œë‹¤.
 		 */
 		List<Map<String, Object>> list = sampleService.selectBoardList(commandMap);
 		mv.addObject("list", list);
@@ -81,6 +81,16 @@ public class SampleController {
 		return mv;
 	}
 	
+	
+	/**
+	 * 
+	 * @param commandMap
+	 * @return
+	 * @throws Exception
+	 * 
+	 * openSampleBoardListí•¨ìˆ˜ì—ì„œ ì „ë‹¬ì¸ìë¥¼ CommandMapìœ¼ë¡œ ìˆ˜ì •
+	 * 
+	 */
 	@RequestMapping(value="/sample/testMapArgumentResolver.do")
 	public ModelAndView testMapArgumentResolver(CommandMap commandMap) throws Exception{
 	    ModelAndView mv = new ModelAndView("");

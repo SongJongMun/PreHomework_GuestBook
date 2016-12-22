@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * 
  * @author skuug
- * ºñÁî´Ï½º ·ÎÁ÷ÀÇ ¼öÇàÀ» À§ÇÑ ¸Ş¼­µå¸¦ Á¤ÀÇÇÑ´Ù.
+ * ë¹„ì¦ˆë‹ˆìŠ¤ ë¡œì§ì˜ ìˆ˜í–‰ì„ ìœ„í•œ ë©”ì„œë“œë¥¼ ì •ì˜í•œë‹¤.
  */
 public interface SampleService {
 	List<Map<String, Object>> selectBoardList(Map<String, Object> map) throws Exception;

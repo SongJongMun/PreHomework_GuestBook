@@ -11,11 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * 
  * @author skuug
- * DAO : Data Access Object : Data Access Object¸¦ Factory ÆĞÅÏÈ­ ½ÃÅ°´Â °ÍÀ¸·Î, ºñÁî´Ï½º ·ÎÁ÷À» ¸ğµâÈ­ ÇÏ´Â ¹æ¹ı.
- * Context-mapper.xml¿¡¼­ SqlSessionTemplateÀ» ¼³Á¤ÇÏ¿´°í, ÀÌ´Â SqlSessionÀ» ´ëÃ¼ÇÔ
- * AbstractDAO¿¡¼­ SqlSessionÀ» ¼±¾ğÇÏ°í Autowired AnnotationÀ» ÅëÇØ xml¿¡ ¼±¾ğÇÑ ÀÇÁ¸°ü°è¸¦ ÀÚµ¿À¸·Î ÁÖÀÔ.
- * AbstractDAO¿¡¼­ Insert, Delete, Update, Select Method¸¦ ÀçÁ¤ÀÇ
- * ½ÇÁ¦ °³¹ß¿¡¼­´Â °¢ ºñÁî´Ï½º ·ÎÁ÷À» ´ã´çÇÒ DAO¸¦ »ı¼ºÇÏ¿© AbstractDAO¸¦ »ó¼Ó¹Şµµ·Ï ÇÒ °èÈ¹ÀÌ´Ù. 
+ * DAO : Data Access Object : Data Access Objectë¥¼ Factory íŒ¨í„´í™” ì‹œí‚¤ëŠ” ê²ƒìœ¼ë¡œ, ë¹„ì¦ˆë‹ˆìŠ¤ ë¡œì§ì„ ëª¨ë“ˆí™” í•˜ëŠ” ë°©ë²•.
+ * Context-mapper.xmlì—ì„œ SqlSessionTemplateì„ ì„¤ì •í•˜ì˜€ê³ , ì´ëŠ” SqlSessionì„ ëŒ€ì²´í•¨
+ * AbstractDAOì—ì„œ SqlSessionì„ ì„ ì–¸í•˜ê³  Autowired Annotationì„ í†µí•´ xmlì— ì„ ì–¸í•œ ì˜ì¡´ê´€ê³„ë¥¼ ìë™ìœ¼ë¡œ ì£¼ì….
+ * AbstractDAOì—ì„œ Insert, Delete, Update, Select Methodë¥¼ ì¬ì •ì˜
+ * ì‹¤ì œ ê°œë°œì—ì„œëŠ” ê° ë¹„ì¦ˆë‹ˆìŠ¤ ë¡œì§ì„ ë‹´ë‹¹í•  DAOë¥¼ ìƒì„±í•˜ì—¬ AbstractDAOë¥¼ ìƒì†ë°›ë„ë¡ í•  ê³„íšì´ë‹¤. 
  */
 public class AbstractDAO {
     protected Log log = LogFactory.getLog(AbstractDAO.class);

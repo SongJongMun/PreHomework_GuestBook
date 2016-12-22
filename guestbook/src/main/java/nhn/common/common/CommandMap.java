@@ -5,6 +5,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
  
+/**
+ * 
+ * @author skuug
+ * HandlerMethodArgumentResolver는 컨트롤러의 파라미터가 Map 형식이면 동작하지 않음
+ * HandlerMethodArgumentResolver를 이용하여 그러한 기능을 만들더라도, 컨트롤러의 파라미터가 Map 형식이면 직접 설정한 클래스가 아닌, 스프링에서 기본적으로 설정된 ArgumentResolver를 거치게 된다. 
+ * 그래서 Map을 대신할 CommandMap을 작성한다.
+ */
 public class CommandMap {
     Map<String,Object> map = new HashMap<String,Object>();
      

@@ -21,8 +21,8 @@ public class HomeController {
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
-	 * RequestMapping : jsp¿¡¼­ µé¾î¿Â ¿äÃ»¿¡ ÇØ´çÇÏ´Â ºñÁî´Ï½º ·ÎÁ÷À» Ã£¾ÆÁÖ´Â ¿ªÈ°, 
-	 * return : jsp ÆäÀÌÁö ÀÌ¸§, Servlet ¼³Á¤¿¡¼­ ÀÚµ¿À¸·Î prefix(/WEB-INF/views)¿Í  suffix(.jsp) ¼öÇà
+	 * RequestMapping : jspì—ì„œ ë“¤ì–´ì˜¨ ìš”ì²­ì— í•´ë‹¹í•˜ëŠ” ë¹„ì¦ˆë‹ˆìŠ¤ ë¡œì§ì„ ì°¾ì•„ì£¼ëŠ” ì—­í™œ, 
+	 * return : jsp í˜ì´ì§€ ì´ë¦„, Servlet ì„¤ì •ì—ì„œ ìë™ìœ¼ë¡œ prefix(/WEB-INF/views)ì™€  suffix(.jsp) ìˆ˜í–‰
 	 */
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -34,7 +34,7 @@ public class HomeController {
 		
 		String formattedDate = dateFormat.format(date);
 		
-		//ºñÁî´Ï½º ·ÎÁ÷¿¡¼­ ¼öÇàÇÑ °á°ú¸¦ È­¸éÀ¸·Î º¸³»ÁÖ±â À§ÇÑ ºÎºĞ, ServerTimeÀÌ¶ó´Â ÀÌ¸§À¸·Î formattedDate¸¦ Àü¼ÛÇÔ
+		//ë¹„ì¦ˆë‹ˆìŠ¤ ë¡œì§ì—ì„œ ìˆ˜í–‰í•œ ê²°ê³¼ë¥¼ í™”ë©´ìœ¼ë¡œ ë³´ë‚´ì£¼ê¸° ìœ„í•œ ë¶€ë¶„, ServerTimeì´ë¼ëŠ” ì´ë¦„ìœ¼ë¡œ formattedDateë¥¼ ì „ì†¡í•¨
 		model.addAttribute("serverTime", formattedDate );
 		
 		

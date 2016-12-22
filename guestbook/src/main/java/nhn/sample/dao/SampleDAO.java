@@ -10,15 +10,15 @@ import nhn.common.dao.AbstractDAO;
 /**
  * 
  * @author skuug
- * @Repository¶ó´Â ¾î³ëÅ×ÀÌ¼ÇÀ» ÅëÇØ¼­ ÀÌ Å¬·¡½º°¡ DAO ÀÓÀ» ¼±¾ğÇÏ°í ÀÌ¸§À» "sampleDAO"·Î ÀÛ¼º
- * SampleServiceImpl¿¡¼­ @Resource(name="sampleDAO")·Î beanÀ» ¼öµ¿À¸·Î µî·ÏÇÏ¿´°í, °Å±â¼­ »ç¿ëµÈ ºóÀÌ SampleDAO Å¬·¡½º
+ * @Repositoryë¼ëŠ” ì–´ë…¸í…Œì´ì…˜ì„ í†µí•´ì„œ ì´ í´ë˜ìŠ¤ê°€ DAO ì„ì„ ì„ ì–¸í•˜ê³  ì´ë¦„ì„ "sampleDAO"ë¡œ ì‘ì„±
+ * SampleServiceImplì—ì„œ @Resource(name="sampleDAO")ë¡œ beanì„ ìˆ˜ë™ìœ¼ë¡œ ë“±ë¡í•˜ì˜€ê³ , ê±°ê¸°ì„œ ì‚¬ìš©ëœ ë¹ˆì´ SampleDAO í´ë˜ìŠ¤
  */
 @Repository("sampleDAO")
 public class SampleDAO extends AbstractDAO{
 	
 	@SuppressWarnings("unchecked")
     public List<Map<String, Object>> selectBoardList(Map<String, Object> map) throws Exception{
-		//selectList ¸Ş¼­µåÀÇ ÀÎÀÚ´Â µÎ°¡Áö, Ã¹¹øÂ°´Â Äõ¸® ÀÌ¸§, µÎ¹øÂ°´Â Äõ¸®°¡ ½ÇÇàµÇ´Âµ¥ ÇÊ¿äÇÑ º¯¼öµé, °á°ú°ªÀº list Çü½ÄÀ¸·Î ¹İÈ¯ÇÒ ¼ö ÀÖµµ·Ï Çüº¯È¯
+		//selectList ë©”ì„œë“œì˜ ì¸ìëŠ” ë‘ê°€ì§€, ì²«ë²ˆì§¸ëŠ” ì¿¼ë¦¬ ì´ë¦„, ë‘ë²ˆì§¸ëŠ” ì¿¼ë¦¬ê°€ ì‹¤í–‰ë˜ëŠ”ë° í•„ìš”í•œ ë³€ìˆ˜ë“¤, ê²°ê³¼ê°’ì€ list í˜•ì‹ìœ¼ë¡œ ë°˜í™˜í•  ìˆ˜ ìˆë„ë¡ í˜•ë³€í™˜
         return (List<Map<String, Object>>)selectList("sample.selectBoardList", map);
     }
 }

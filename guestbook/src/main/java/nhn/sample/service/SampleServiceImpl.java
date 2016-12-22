@@ -13,8 +13,8 @@ import nhn.sample.dao.SampleDAO;
 /**
  * 
  * @author skuug
- * ServiceImpl : Service ÀÎÅÍÆäÀÌ½º¸¦ ÅëÇØ Á¤ÀÇµÈ ¸Ş¼­µå¸¦ ½ÇÁ¦·Î ±¸ÇöÇÏ´Â Å¬·¡½º
- * @Servcie ¾î³ëÅ×ÀÌ¼ÇÀ» ÀÌ¿ëÇÏ¿© Service °´Ã¼ÀÓÀ» ¼±¾ğÇÏ¿´°í, ÀÌ °´Ã¼ÀÇ ÀÌ¸§Àº "sampleService"¶ó°í ¼±¾ğÇÔ. 
+ * ServiceImpl : Service ì¸í„°í˜ì´ìŠ¤ë¥¼ í†µí•´ ì •ì˜ëœ ë©”ì„œë“œë¥¼ ì‹¤ì œë¡œ êµ¬í˜„í•˜ëŠ” í´ë˜ìŠ¤
+ * @Servcie ì–´ë…¸í…Œì´ì…˜ì„ ì´ìš©í•˜ì—¬ Service ê°ì²´ì„ì„ ì„ ì–¸í•˜ì˜€ê³ , ì´ ê°ì²´ì˜ ì´ë¦„ì€ "sampleService"ë¼ê³  ì„ ì–¸í•¨. 
  * 
  */
 @Service("sampleService")
@@ -22,7 +22,7 @@ public class SampleServiceImpl implements SampleService{
 	Logger log = Logger.getLogger(this.getClass());
 	
 	/**
-	 * Service¿¡¼­´Â µ¥ÀÌÅÍ Á¢±ÙÀ» À§ÇÑ DAO(Data Access Object) °´Ã¼¸¦ ¼±¾ğ
+	 * Serviceì—ì„œëŠ” ë°ì´í„° ì ‘ê·¼ì„ ìœ„í•œ DAO(Data Access Object) ê°ì²´ë¥¼ ì„ ì–¸
 	 */
 	@Resource(name="sampleDAO")
     private SampleDAO sampleDAO;

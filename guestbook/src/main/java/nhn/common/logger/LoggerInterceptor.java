@@ -12,8 +12,8 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter {
     protected Log log = LogFactory.getLog(LoggerInterceptor.class);
      
     /**
-     * Client -> Controller ÀüÃ³¸®±â PreHandle
-     * Log4j¸¦ »ç¿ëÇØ¼­ ·Î±× Ãâ·Â, ÇöÀç È£ÃâµÈ URI È£Ãâ
+     * Client -> Controller ì „ì²˜ë¦¬ê¸° PreHandle
+     * Log4jë¥¼ ì‚¬ìš©í•´ì„œ ë¡œê·¸ ì¶œë ¥, í˜„ìž¬ í˜¸ì¶œëœ URI í˜¸ì¶œ
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -25,7 +25,7 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter {
     }
      
     /**
-     * Controller->Client ÈÄÃ³¸®±â PostHandle
+     * Controller->Client í›„ì²˜ë¦¬ê¸° PostHandle
      */
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
