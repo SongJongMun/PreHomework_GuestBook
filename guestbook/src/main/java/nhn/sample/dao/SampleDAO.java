@@ -21,4 +21,26 @@ public class SampleDAO extends AbstractDAO{
 		//selectList 메서드의 인자는 두가지, 첫번째는 쿼리 이름, 두번째는 쿼리가 실행되는데 필요한 변수들, 결과값은 list 형식으로 반환할 수 있도록 형변환
         return (List<Map<String, Object>>)selectList("sample.selectBoardList", map);
     }
+	
+	public void insertBoard(Map<String, Object> map) throws Exception{
+	    insert("sample.insertBoard", map);
+	}
+	
+	public void updateHitCnt(Map<String, Object> map) throws Exception{
+	    update("sample.updateHitCnt", map);
+	}
+	 
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> selectBoardDetail(Map<String, Object> map) throws Exception{
+	    return (Map<String, Object>) selectOne("sample.selectBoardDetail", map);
+	}
+	
+	public void updateBoard(Map<String, Object> map) throws Exception{
+	    update("sample.updateBoard", map);
+	}
+	
+	public void deleteBoard(Map<String, Object> map) throws Exception{
+	    update("sample.deleteBoard", map);
+	}
+	
 }
