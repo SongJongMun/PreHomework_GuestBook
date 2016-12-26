@@ -1,3 +1,10 @@
+function gfn_emailValidate(str) {
+    if(gfn_isNull(str) == true) return false;
+    
+    var r = new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
+    return (str.match(r) == null) ? false : true;
+}
+
 function gfn_isNull(str) {
     if (str == null) return true;
     if (str == "NaN") return true;

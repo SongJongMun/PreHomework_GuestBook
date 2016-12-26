@@ -66,7 +66,7 @@ public class SampleController {
 	 * 
 	 */
 	@RequestMapping(value = "/sample/openBoardList.do")
-	public ModelAndView openSampleBoardList(Map<String, Object> commandMap) throws Exception {
+	public ModelAndView openBoardList(Map<String, Object> commandMap) throws Exception {
 		//화면에 보여줄 jsp파일을 의미
 		ModelAndView mv = new ModelAndView("/sample/boardList");
 
@@ -111,6 +111,8 @@ public class SampleController {
 	 * @param commandMap
 	 * @return ModelAndView
 	 * @throws Exception
+	 * 
+	 * 방명록 작성 페이지를 반환한다.
 	 */
 	@RequestMapping(value="/sample/openBoardWrite.do")
 	public ModelAndView openBoardWrite(CommandMap commandMap) throws Exception{
@@ -124,12 +126,17 @@ public class SampleController {
 	 * @param commandMap
 	 * @return ModelAndView
 	 * @throws Exception
+	 * 
+	 * post 형식으로 전달받은 인자를 이용하여 Query문 실행
+	 * commandMap - IDX, TITLE, CONTENTS, EMAIL, PASSWORD
+	 * 실행 후 방명록 목록으로 redirect한다.
 	 */
 	@RequestMapping(value="/sample/insertBoard.do")
 	public ModelAndView insertBoard(CommandMap commandMap) throws Exception{
 	    ModelAndView mv = new ModelAndView("redirect:/sample/openBoardList.do");
-	     
-	    sampleService.insertBoard(commandMap.getMap());
+	    
+	    if(this.isEmailValid(commandMap)) sampleService.insertBoard(commandMap.getMap());
+	    
 	    return mv;
 	}
 	
@@ -138,6 +145,11 @@ public class SampleController {
 	 * @param commandMap
 	 * @return
 	 * @throws Exception
+	 * 
+	 * 게시물 상세 페이지 반환
+	 * commandMap - IDX
+	 * 반환과 동시에 post DB에 Select문 수행을 통한 정보들을 Map에 저장, 페이지에 인자로 전달.
+	 * 
 	 */
 	@RequestMapping(value="/sample/openBoardDetail.do")
 	public ModelAndView openBoardDetail(CommandMap commandMap) throws Exception{
@@ -154,13 +166,20 @@ public class SampleController {
 	 * @param commandMap
 	 * @return
 	 * @throws Exception
+	 * 
+	 * 게시물을 삭제하고 게시물 리스트 페이지로 redirect
+	 * commandMap - IDX, TITLE, CONTENTS, EMAIL, PASSWORD
+	 * Query문을 통해 EMail과 PassWord의 일치를 확인
+	 * Service(server)와 Javascript(client)를 통해 Email과 Password가 입력되었는지를 확인
+	 * 
 	 */
 	@RequestMapping(value="/sample/deleteBoard.do")
 	public ModelAndView deleteBoard(CommandMap commandMap) throws Exception{
 	    ModelAndView mv = new ModelAndView("redirect:/sample/openBoardList.do");
-	     
-	    sampleService.deleteBoard(commandMap.getMap());
-	     
+	    
+	    if(isEmailValid(commandMap))
+	    	sampleService.deleteBoard(commandMap.getMap());
+	    
 	    return mv;
 	}
 	
@@ -169,6 +188,11 @@ public class SampleController {
 	 * @param commandMap
 	 * @return
 	 * @throws Exception
+	 * 
+	 * 게시물 제목 및 내용을 Update하기 위한 페이지 반환
+	 * 기존 정보를 표시하기 위해 Select문 수행 후 정보 표현
+	 * openBoardDetail 함수와 동일 기능 수행
+	 * 
 	 */
 	@RequestMapping(value="/sample/openBoardUpdate.do")
 	public ModelAndView openBoardUpdate(CommandMap commandMap) throws Exception{
@@ -185,14 +209,48 @@ public class SampleController {
 	 * @param commandMap
 	 * @return
 	 * @throws Exception
+	 * 
+	 * 수정한 게시물의 제목 및 내용 수정 후, 게시물 상세 페이지 반환
+	 * commandMap - IDX, TITLE, CONTENTS
+	 * 
 	 */
 	@RequestMapping(value="/sample/updateBoard.do")
 	public ModelAndView updateBoard(CommandMap commandMap) throws Exception{
 	    ModelAndView mv = new ModelAndView("redirect:/sample/openBoardDetail.do");
-	     
-	    sampleService.updateBoard(commandMap.getMap());
+
+	    if(isEmailValid(commandMap)) sampleService.updateBoard(commandMap.getMap());
 	     
 	    mv.addObject("IDX", commandMap.get("IDX"));
 	    return mv;
+	}
+	
+	/**
+	 * 
+	 * @param commandMap
+	 * @return
+	 * @throws Exception
+	 * 
+	 * 수정한 게시물의 제목 및 내용 수정 후, 게시물 상세 페이지 반환
+	 * commandMap - IDX, TITLE, CONTENTS, EMAIL, PASSWORD
+	 * 
+	 */
+	@RequestMapping(value="/sample/modifyBoard.do")
+	public ModelAndView modifyBoard(CommandMap commandMap) throws Exception{
+	    ModelAndView mv = new ModelAndView("/sample/boardModify");
+
+	    Map<String,Object> map = sampleService.selectBoardDetail(commandMap.getMap());
+	    mv.addObject("map", map);
+	     
+	    return mv;
+	}
+	
+	public boolean isEmailValid(CommandMap commandMap){
+		String address = new String((String) commandMap.get("EMAIL"));
+		String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+        
+		java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(ePattern);
+        java.util.regex.Matcher mathcher = pattern.matcher(address);
+        
+        return mathcher.matches();
 	}
 }

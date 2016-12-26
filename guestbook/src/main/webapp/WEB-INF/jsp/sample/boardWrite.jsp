@@ -22,11 +22,23 @@
 					<td colspan="2" class="view_text"><textarea rows="20"
 							cols="100" title="내용" id="CONTENTS" name="CONTENTS"></textarea></td>
 				</tr>
+				<tr>
+				 	<th scope="row">E-Mail</th>
+                    <td>
+                    	<input type="email" id="EMAIL" name="EMAIL" class="wdp_90"/>
+                    </td>
+				</tr>
+				<tr>
+                    <th scope="row">PASSWORD</th>
+                    <td>
+                    	<input type="password" id="PASSWORD" name="PASSWORD" class="wdp_90"/>
+                    </td>
+				</tr>
 			</tbody>
 		</table>
 
-		<a href="#this" class="btn" id="write">작성하기</a> <a href="#this"
-			class="btn" id="list">목록으로</a>
+		<a href="#this" class="btn" id="write">작성하기</a> 
+		<a href="#this"	class="btn" id="list">목록으로</a>
 	</form>
 
 	<%@ include file="/WEB-INF/include/include-body.jspf"%>
@@ -39,21 +51,37 @@
 		     
 		    $("#write").on("click", function(e){ //작성하기 버튼
 		        e.preventDefault();
-		        fn_insertBoard();
+		    	if(fn_checkForm() == true)
+		    		fn_insertBoard();
+		    	else
+            		alert("Input Form is Not Validate!!");
 		    });
 		});
 		 
 		function fn_openBoardList(){
 		    var comSubmit = new ComSubmit();
-		    comSubmit.setUrl("<c:url value='/sample/openBoardList.do' />");
+		    comSubmit.setUrl("<c:url value='/sample/openBoardList.do'/>");
 		    comSubmit.submit();
 		}
 		 
 		function fn_insertBoard(){
 		    var comSubmit = new ComSubmit("frm");
-		    comSubmit.setUrl("<c:url value='/sample/insertBoard.do' />");
+		    comSubmit.setUrl("<c:url value='/sample/insertBoard.do'/>");
 		    comSubmit.submit();
 		}
+		 
+        function fn_checkForm(){
+        	if(gfn_isNull($("#TITLE").val()) == true) 		return false;
+        	if(gfn_isNull($("#CONTENTS").val()) == true) 	return false;
+        	if(fn_checkEmail() == false) 					return false;
+        	if(gfn_isNull($("#PASSWORD").val()) == true) 	return false;
+        	return true;
+        }
+        
+        function fn_checkEmail(){
+        	if(gfn_emailValidate($("#EMAIL").val())) return true;
+        	return false;
+        }     
     </script>
 </body>
 </html>

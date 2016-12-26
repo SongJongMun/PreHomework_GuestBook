@@ -32,22 +32,17 @@
                 </tr>
                 <tr>
                     <th scope="row">제목</th>
-                    <td colspan="3">
-                        <input type="text" id="TITLE" name="TITLE" class="wdp_90" value="${map.TITLE }"/>
-                    </td>
+                    <td colspan="3">${map.TITLE}</td>
                 </tr>
                 <tr>
-                    <td colspan="4" class="view_text">
-                        <textarea rows="20" cols="100" title="내용" id="CONTENTS" name="CONTENTS">${map.CONTENTS }</textarea>
-                    </td>
+                    <td colspan="4" class="view_text">${map.CONTENTS}</td>
                 </tr>
             </tbody>
         </table>
     </form>
      
     <a href="#this" class="btn" id="list">목록으로</a>
-    <a href="#this" class="btn" id="update">저장하기</a>
-    <a href="#this" class="btn" id="delete">삭제하기</a>
+    <a href="#this" class="btn" id="modify">수정하기</a>
      
     <%@ include file="/WEB-INF/include/include-body.jspf" %>
     <script type="text/javascript">
@@ -56,15 +51,9 @@
                 e.preventDefault();
                 fn_openBoardList();
             });
-             
-            $("#update").on("click", function(e){ //저장하기 버튼
+            $("#modify").on("click", function(e){ //삭제하기 버튼
                 e.preventDefault();
-                fn_updateBoard();
-            });
-             
-            $("#delete").on("click", function(e){ //삭제하기 버튼
-                e.preventDefault();
-                fn_deleteBoard();
+                fn_modifyBoard();
             });
         });
          
@@ -74,18 +63,11 @@
             comSubmit.submit();
         }
          
-        function fn_updateBoard(){
-            var comSubmit = new ComSubmit("frm");
-            comSubmit.setUrl("<c:url value='/sample/updateBoard.do' />");
-            comSubmit.submit();
-        }
-         
-        function fn_deleteBoard(){
+        function fn_modifyBoard(){
             var comSubmit = new ComSubmit();
-            comSubmit.setUrl("<c:url value='/sample/deleteBoard.do' />");
+            comSubmit.setUrl("<c:url value='/sample/modifyBoard.do' />");
             comSubmit.addParam("IDX", $("#IDX").val());
             comSubmit.submit();
-             
         }
     </script>
 </body>

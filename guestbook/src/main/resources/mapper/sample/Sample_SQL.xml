@@ -31,15 +31,19 @@
 	            CONTENTS, 
 	            HIT_CNT, 
 	            DEL_GB, 
-	            CREA_ID
+	            CREA_ID,
+	            CREA_EMAIL,
+	            CREA_PASSWORD
 	        )
 	        VALUES
 	        (
 	            #{TITLE}, 
 	            #{CONTENTS}, 
-	            0, 
+	            0,
 	            'N', 
-	            'Admin'
+	            'Admin',
+	            #{EMAIL}, 
+	            #{PASSWORD} 
 	        )
 	    ]]>
 	</insert>
@@ -77,7 +81,9 @@
 	            TITLE = #{TITLE},
 	            CONTENTS = #{CONTENTS}
 	        WHERE
-	            IDX = #{IDX}    
+	            IDX = #{IDX} AND 
+	            CREA_EMAIL = #{EMAIL} AND 
+	            CREA_PASSWORD = #{PASSWORD}
 	    ]]>
 	</update>
 	
@@ -87,7 +93,9 @@
 	        SET
 	            DEL_GB = 'Y'
 	        WHERE
-	            IDX = #{IDX}
+	            IDX = #{IDX} AND 
+	            CREA_EMAIL = #{EMAIL} AND 
+	            CREA_PASSWORD = #{PASSWORD} 
 	    ]]>
 	</update>
 </mapper>
