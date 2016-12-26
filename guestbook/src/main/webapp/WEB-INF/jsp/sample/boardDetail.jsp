@@ -37,6 +37,12 @@
                 <tr>
                     <td colspan="4" class="view_text">${map.CONTENTS}</td>
                 </tr>
+                <c:if test="${'Y' eq map.MODIFIED}">
+	                <tr>
+	                	<th scope="row">최종 수정 시간</th>
+	                	<td colspan="3">${map.MODIFY_TIME}</td>
+	                </tr>
+                </c:if>
             </tbody>
         </table>
     </form>

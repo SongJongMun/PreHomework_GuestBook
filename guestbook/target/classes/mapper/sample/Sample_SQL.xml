@@ -66,7 +66,9 @@
 	            CREA_ID,
 	            CREA_DTM,
 	            TITLE,
-	            CONTENTS
+	            CONTENTS,
+                MODIFIED,
+                MODIFY_TIME
 	        FROM
 	            TB_BOARD
 	        WHERE
@@ -79,7 +81,9 @@
 	        UPDATE TB_BOARD 
 	        SET
 	            TITLE = #{TITLE},
-	            CONTENTS = #{CONTENTS}
+	            CONTENTS = #{CONTENTS},
+	            MODIFY_TIME = CURRENT_TIMESTAMP,
+	            MODIFIED = 'Y'
 	        WHERE
 	            IDX = #{IDX} AND 
 	            CREA_EMAIL = #{EMAIL} AND 
@@ -95,7 +99,7 @@
 	        WHERE
 	            IDX = #{IDX} AND 
 	            CREA_EMAIL = #{EMAIL} AND 
-	            CREA_PASSWORD = #{PASSWORD} 
+	            CREA_PASSWORD = #{PASSWORD}
 	    ]]>
 	</update>
 </mapper>

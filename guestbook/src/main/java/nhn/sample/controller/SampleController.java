@@ -156,6 +156,7 @@ public class SampleController {
 	    ModelAndView mv = new ModelAndView("/sample/boardDetail");
 	     
 	    Map<String,Object> map = sampleService.selectBoardDetail(commandMap.getMap());
+	    
 	    mv.addObject("map", map);
 	     
 	    return mv;
@@ -168,7 +169,7 @@ public class SampleController {
 	 * @throws Exception
 	 * 
 	 * 게시물을 삭제하고 게시물 리스트 페이지로 redirect
-	 * commandMap - IDX, TITLE, CONTENTS, EMAIL, PASSWORD
+	 * commandMap - IDX, EMAIL, PASSWORD
 	 * Query문을 통해 EMail과 PassWord의 일치를 확인
 	 * Service(server)와 Javascript(client)를 통해 Email과 Password가 입력되었는지를 확인
 	 * 

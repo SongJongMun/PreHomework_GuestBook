@@ -69,18 +69,18 @@
              
             $("#update").on("click", function(e){ //저장하기 버튼
                 e.preventDefault();
-            	if(fn_checkForm())
+            	if(fn_checkModifyForm())
             		fn_updateBoard();
             	else
-            		alert("Input Form is Not Validate!!");
+            		alert("Modify Form is Not Validate!!");
             });
              
             $("#delete").on("click", function(e){ //삭제하기 버튼
                 e.preventDefault();
-            	if(fn_checkForm())
+            	if(fn_checkDeleteForm())
             		fn_deleteBoard();
             	else
-            		alert("Input Form is Not Validate!!");
+            		alert("Delete Form is Not Validate!!");
             });
         });
         
@@ -97,15 +97,21 @@
         }
          
         function fn_deleteBoard(){
-            var comSubmit = new ComSubmit();
-            comSubmit.setUrl("<c:url value='/sample/deleteBoard.do' />");
-            comSubmit.addParam("IDX", $("#IDX").val());
+            var comSubmit = new ComSubmit("frm");
+            comSubmit.setUrl("<c:url value='/sample/deleteBoard.do'/>");
             comSubmit.submit();
         }
         
-        function fn_checkForm(){
+        function fn_checkModifyForm(){
         	if(gfn_isNull($("#TITLE").val()) == true) 		return false;
         	if(gfn_isNull($("#CONTENTS").val()) == true) 	return false;
+        	if(fn_checkEmail() == false) 					return false;
+        	if(gfn_isNull($("#PASSWORD").val()) == true) 	return false;
+        	return true;
+        }
+        
+        function fn_checkDeleteForm(){
+        	if(gfn_isNull($("#TITLE").val()) == true) 		return false;
         	if(fn_checkEmail() == false) 					return false;
         	if(gfn_isNull($("#PASSWORD").val()) == true) 	return false;
         	return true;
