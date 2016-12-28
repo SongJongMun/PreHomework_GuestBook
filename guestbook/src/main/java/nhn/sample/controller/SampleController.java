@@ -1,9 +1,11 @@
 package nhn.sample.controller;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
@@ -154,8 +156,12 @@ public class SampleController {
 	@RequestMapping(value="/sample/openBoardDetail.do")
 	public ModelAndView openBoardDetail(CommandMap commandMap) throws Exception{
 	    ModelAndView mv = new ModelAndView("/sample/boardDetail");
-	     
+	    
+	    printCommandMap(commandMap);
+	    
 	    Map<String,Object> map = sampleService.selectBoardDetail(commandMap.getMap());
+	    
+	    printSelectQueryMap(map);
 	    
 	    mv.addObject("map", map);
 	     
@@ -253,5 +259,28 @@ public class SampleController {
         java.util.regex.Matcher mathcher = pattern.matcher(address);
         
         return mathcher.matches();
+	}
+	
+	public boolean isCommandMapValid(CommandMap commandMap){
+		boolean vaildResult = true;
+		
+		//Map<String, Object> cMap = commandMap.getMap();
+		
+		//Map<String, Object> collect = commandMap.entrySet().stream().filter(map -> map.getKey().equals("aa"))
+		//		.collect(Collectors.toMap(p -> p.getKey(), p -> p.getValue()));
+		
+		return vaildResult;
+	}
+	
+	public void printCommandMap(CommandMap commandMap){
+		log.debug("======= [ Clients Command ] =======");
+		commandMap.getMap().entrySet().stream().forEach(x->log.debug("[" + x.getKey() + "] : " + x.getValue().toString()));
+		log.debug("===================================");
+	}
+	
+	public void printSelectQueryMap(Map<String,Object> commandMap){
+		log.debug("===== [ Select Query Result ] =====");
+		commandMap.entrySet().stream().forEach(x->log.debug("[" + x.getKey() + "] : " + x.getValue().toString()));
+		log.debug("===================================");
 	}
 }
