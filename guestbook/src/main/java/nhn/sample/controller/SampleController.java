@@ -136,8 +136,8 @@ public class SampleController {
 	@RequestMapping(value="/sample/insertBoard.do")
 	public ModelAndView insertBoard(CommandMap commandMap) throws Exception{
 	    ModelAndView mv = new ModelAndView("redirect:/sample/openBoardList.do");
-	    
-	    if(this.isEmailValid(commandMap)) sampleService.insertBoard(commandMap.getMap());
+
+	    if(isCommandMapValid(commandMap, "INSERT") && this.isEmailValid(commandMap)) sampleService.insertBoard(commandMap.getMap());
 	    
 	    return mv;
 	}
@@ -156,6 +156,8 @@ public class SampleController {
 	@RequestMapping(value="/sample/openBoardDetail.do")
 	public ModelAndView openBoardDetail(CommandMap commandMap) throws Exception{
 	    ModelAndView mv = new ModelAndView("/sample/boardDetail");
+	    
+	    isCommandMapValid(commandMap, "DETAIL");
 	    
 	    printCommandMap(commandMap);
 	    
@@ -184,7 +186,7 @@ public class SampleController {
 	public ModelAndView deleteBoard(CommandMap commandMap) throws Exception{
 	    ModelAndView mv = new ModelAndView("redirect:/sample/openBoardList.do");
 	    
-	    if(isEmailValid(commandMap))
+	    if(isCommandMapValid(commandMap, "DELETE") && isEmailValid(commandMap))
 	    	sampleService.deleteBoard(commandMap.getMap());
 	    
 	    return mv;
@@ -245,8 +247,10 @@ public class SampleController {
 	public ModelAndView modifyBoard(CommandMap commandMap) throws Exception{
 	    ModelAndView mv = new ModelAndView("/sample/boardModify");
 
-	    Map<String,Object> map = sampleService.selectBoardDetail(commandMap.getMap());
-	    mv.addObject("map", map);
+	    if(isCommandMapValid(commandMap, "MODIFY") && isEmailValid(commandMap)){
+	    	Map<String,Object> map = sampleService.selectBoardDetail(commandMap.getMap());
+		    mv.addObject("map", map);
+	    }
 	     
 	    return mv;
 	}
@@ -261,15 +265,54 @@ public class SampleController {
         return mathcher.matches();
 	}
 	
-	public boolean isCommandMapValid(CommandMap commandMap){
+	public boolean isCommandMapValid(CommandMap commandMap, String command){
 		boolean vaildResult = true;
 		
-		//Map<String, Object> cMap = commandMap.getMap();
+		//case INSERT	- 	   TITLE, CONTENTS, EMAIL, PASSWORD
+		//case MODIFY 	- IDX, TITLE, CONTENTS, EMAIL, PASSWORD 
+		//case DELETE 	- IDX, 				  	EMAIL, PASSWORD
+		//case DETAIL 	- IDX
 		
-		//Map<String, Object> collect = commandMap.entrySet().stream().filter(map -> map.getKey().equals("aa"))
-		//		.collect(Collectors.toMap(p -> p.getKey(), p -> p.getValue()));
+		Map<String,Object> aMap = commandMap.getMap().entrySet().stream().filter(x->{
+			return x.getValue() != null && (((String)x.getValue()).length() != 0);
+		}).collect(Collectors.toMap(p -> p.getKey(), p -> p.getValue()));
+		
+		if(command.equals("DETAIL")){
+			vaildResult &= checkIndxVaild(aMap);
+		} else {
+			vaildResult &= checkAccoutVaild(aMap);
+		}
+		
+		if(command.equals("INSERT")){
+			vaildResult &= checkContentsVaild(aMap);
+		} else if(command.equals("MODIFY")) {
+			vaildResult &= checkIndxVaild(aMap);
+			vaildResult &= checkContentsVaild(aMap);
+		} else if(command.equals("DELETE")){
+			vaildResult &= checkIndxVaild(aMap);
+		}
 		
 		return vaildResult;
+	}
+	
+	public boolean checkIndxVaild(Map<String,Object> aMap){
+		if(!aMap.containsKey("IDX") || ((String)aMap.get("IDX")).isEmpty() ) 				return false;
+		
+		return true;
+	}
+	
+	public boolean checkContentsVaild(Map<String,Object> aMap){
+		if(!aMap.containsKey("TITLE") || ((String)aMap.get("TITLE")).isEmpty() ) 			return false;
+		if(!aMap.containsKey("CONTENTS") || ((String)aMap.get("CONTENTS")).isEmpty() ) 		return false;
+		
+		return true;
+	}
+	
+	public boolean checkAccoutVaild(Map<String,Object> aMap){
+		if(!aMap.containsKey("EMAIL") || ((String)aMap.get("EMAIL")).isEmpty() ) 			return false;
+		if(!aMap.containsKey("PASSWORD") || ((String)aMap.get("PASSWORD")).isEmpty() ) 		return false;
+		
+		return true;
 	}
 	
 	public void printCommandMap(CommandMap commandMap){
@@ -277,7 +320,7 @@ public class SampleController {
 		commandMap.getMap().entrySet().stream().forEach(x->log.debug("[" + x.getKey() + "] : " + x.getValue().toString()));
 		log.debug("===================================");
 	}
-	
+	 
 	public void printSelectQueryMap(Map<String,Object> commandMap){
 		log.debug("===== [ Select Query Result ] =====");
 		commandMap.entrySet().stream().forEach(x->log.debug("[" + x.getKey() + "] : " + x.getValue().toString()));
