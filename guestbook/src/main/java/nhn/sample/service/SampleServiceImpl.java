@@ -27,6 +27,10 @@ public class SampleServiceImpl implements SampleService{
 	@Resource(name="sampleDAO")
     private SampleDAO sampleDAO;
 	
+	public void setSampleDAO(SampleDAO dao){
+		this.sampleDAO = dao;
+	}
+	
 	@Override
 	public List<Map<String, Object>> selectBoardList(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub

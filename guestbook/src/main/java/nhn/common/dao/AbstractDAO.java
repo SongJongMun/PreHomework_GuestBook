@@ -22,6 +22,10 @@ public class AbstractDAO {
      
     @Autowired
     private SqlSessionTemplate sqlSession;
+    
+    public void setSqlSession(SqlSessionTemplate session){
+    	this.sqlSession = session;
+    }
      
     protected void printQueryId(String queryId) {
         if(log.isDebugEnabled()){

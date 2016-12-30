@@ -39,6 +39,11 @@ public class SampleController {
 	@Resource(name = "sampleService")
 	private SampleService sampleService;
 
+	
+	public void setSampleService(SampleService sampleService){
+		this.sampleService = sampleService;
+	}
+	
 	/**
 	 * 
 	 * @param commandMap
