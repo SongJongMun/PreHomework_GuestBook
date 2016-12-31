@@ -1,6 +1,5 @@
 package nhn.sample.controller;
 
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -70,6 +69,7 @@ public class SampleController {
 	 * @throws Exception
 	 * 
 	 * @RequestMapping은 요청 URL을 의미, /sample/openBoardList.do 라는 주소를 호출하게 되면, 이 주소는 @RequestMapping 어노테이션과 매핑되어, 해당 메서드가 실행된다.
+	 * 정상적인 호출시 List 객체를 포함한 ModelAndView 객체를 반환한다.
 	 * 
 	 */
 	@RequestMapping(value = "/sample/openBoardList.do")
@@ -136,13 +136,18 @@ public class SampleController {
 	 * 
 	 * post 형식으로 전달받은 인자를 이용하여 Query문 실행
 	 * commandMap - IDX, TITLE, CONTENTS, EMAIL, PASSWORD
-	 * 실행 후 방명록 목록으로 redirect한다.
+	 * 정상적인 실행 후 방명록 목록으로 redirect한다.
+	 * 비정상적인 실행이거나 이메일이 형식에 맞지 않을 경우 현재 페이지를 다시 Load한다.
 	 */
 	@RequestMapping(value="/sample/insertBoard.do")
 	public ModelAndView insertBoard(CommandMap commandMap) throws Exception{
 	    ModelAndView mv = new ModelAndView("redirect:/sample/openBoardList.do");
-
-	    if(isCommandMapValid(commandMap, "INSERT") && this.isEmailValid(commandMap)) sampleService.insertBoard(commandMap.getMap());
+	    
+	    if(isCommandMapValid(commandMap, "INSERT") && this.isEmailValid(commandMap)){
+	    	sampleService.insertBoard(commandMap.getMap());
+	    } else {
+	    	mv = new ModelAndView("/sample/boardWrite");
+	    }
 	    
 	    return mv;
 	}
@@ -185,15 +190,17 @@ public class SampleController {
 	 * commandMap - IDX, EMAIL, PASSWORD
 	 * Query문을 통해 EMail과 PassWord의 일치를 확인
 	 * Service(server)와 Javascript(client)를 통해 Email과 Password가 입력되었는지를 확인
-	 * 
+	 * 비정상적인 실행이거나 이메일이 형식에 맞지 않을 경우 현재 페이지를 다시 Load한다.
 	 */
 	@RequestMapping(value="/sample/deleteBoard.do")
 	public ModelAndView deleteBoard(CommandMap commandMap) throws Exception{
 	    ModelAndView mv = new ModelAndView("redirect:/sample/openBoardList.do");
 	    
-	    if(isCommandMapValid(commandMap, "DELETE") && isEmailValid(commandMap))
+	    if(isCommandMapValid(commandMap, "DELETE") && isEmailValid(commandMap)){
 	    	sampleService.deleteBoard(commandMap.getMap());
-	    
+	    } else {
+	    	mv = new ModelAndView("/sample/boardModify");
+	    }
 	    return mv;
 	}
 	
@@ -226,14 +233,15 @@ public class SampleController {
 	 * 
 	 * 수정한 게시물의 제목 및 내용 수정 후, 게시물 상세 페이지 반환
 	 * commandMap - IDX, TITLE, CONTENTS
-	 * 
+	 * 현재 사용안함
 	 */
 	@RequestMapping(value="/sample/updateBoard.do")
 	public ModelAndView updateBoard(CommandMap commandMap) throws Exception{
 	    ModelAndView mv = new ModelAndView("redirect:/sample/openBoardDetail.do");
 
 	    if(isEmailValid(commandMap)) sampleService.updateBoard(commandMap.getMap());
-	     
+	    
+	    
 	    mv.addObject("IDX", commandMap.get("IDX"));
 	    return mv;
 	}
@@ -246,22 +254,24 @@ public class SampleController {
 	 * 
 	 * 수정한 게시물의 제목 및 내용 수정 후, 게시물 상세 페이지 반환
 	 * commandMap - IDX, TITLE, CONTENTS, EMAIL, PASSWORD
-	 * 
+	 * 비정상적인 실행이거나 이메일이 형식에 맞지 않을 경우 현재 페이지를 다시 Load한다.
 	 */
 	@RequestMapping(value="/sample/modifyBoard.do")
 	public ModelAndView modifyBoard(CommandMap commandMap) throws Exception{
-	    ModelAndView mv = new ModelAndView("/sample/boardModify");
+	    ModelAndView mv = new ModelAndView("redirect:/sample/boardList");
 
 	    if(isCommandMapValid(commandMap, "MODIFY") && isEmailValid(commandMap)){
 	    	Map<String,Object> map = sampleService.selectBoardDetail(commandMap.getMap());
 		    mv.addObject("map", map);
+	    } else {
+	    	mv = new ModelAndView("/sample/boardModify");
 	    }
-	     
+	    
 	    return mv;
 	}
 	
 	public boolean isEmailValid(CommandMap commandMap){
-		String address = new String((String) commandMap.get("EMAIL"));
+		String address = new String((String)commandMap.get("EMAIL"));
 		String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
         
 		java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(ePattern);
@@ -273,9 +283,9 @@ public class SampleController {
 	public boolean isCommandMapValid(CommandMap commandMap, String command){
 		boolean vaildResult = true;
 		
-		//case INSERT	- 	   TITLE, CONTENTS, EMAIL, PASSWORD
-		//case MODIFY 	- IDX, TITLE, CONTENTS, EMAIL, PASSWORD 
-		//case DELETE 	- IDX, 				  	EMAIL, PASSWORD
+		//case INSERT	- 	   WRITER,TITLE, CONTENTS, EMAIL, PASSWORD
+		//case MODIFY 	- IDX, 		  TITLE, CONTENTS, EMAIL, PASSWORD 
+		//case DELETE 	- IDX, 						   EMAIL, PASSWORD
 		//case DETAIL 	- IDX
 		
 		Map<String,Object> aMap = commandMap.getMap().entrySet().stream().filter(x->{
@@ -283,24 +293,25 @@ public class SampleController {
 		}).collect(Collectors.toMap(p -> p.getKey(), p -> p.getValue()));
 		
 		if(command.equals("DETAIL")){
-			vaildResult &= checkIndxVaild(aMap);
+			vaildResult &= checkIndexVaild(aMap);
 		} else {
 			vaildResult &= checkAccoutVaild(aMap);
 		}
 		
 		if(command.equals("INSERT")){
+			vaildResult &= checkWriterVaild(aMap);
 			vaildResult &= checkContentsVaild(aMap);
 		} else if(command.equals("MODIFY")) {
-			vaildResult &= checkIndxVaild(aMap);
+			vaildResult &= checkIndexVaild(aMap);
 			vaildResult &= checkContentsVaild(aMap);
 		} else if(command.equals("DELETE")){
-			vaildResult &= checkIndxVaild(aMap);
+			vaildResult &= checkIndexVaild(aMap);
 		}
 		
 		return vaildResult;
 	}
 	
-	public boolean checkIndxVaild(Map<String,Object> aMap){
+	public boolean checkIndexVaild(Map<String,Object> aMap){
 		if(!aMap.containsKey("IDX") || ((String)aMap.get("IDX")).isEmpty() ) 				return false;
 		
 		return true;
@@ -309,6 +320,12 @@ public class SampleController {
 	public boolean checkContentsVaild(Map<String,Object> aMap){
 		if(!aMap.containsKey("TITLE") || ((String)aMap.get("TITLE")).isEmpty() ) 			return false;
 		if(!aMap.containsKey("CONTENTS") || ((String)aMap.get("CONTENTS")).isEmpty() ) 		return false;
+		
+		return true;
+	}
+
+	public boolean checkWriterVaild(Map<String,Object> aMap){
+		if(!aMap.containsKey("WRITER") || ((String)aMap.get("WRITER")).isEmpty() ) 			return false;
 		
 		return true;
 	}

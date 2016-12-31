@@ -41,7 +41,7 @@
 	            #{CONTENTS}, 
 	            0,
 	            'N', 
-	            'Admin',
+	            #{WRITER},
 	            #{EMAIL}, 
 	            #{PASSWORD} 
 	        )

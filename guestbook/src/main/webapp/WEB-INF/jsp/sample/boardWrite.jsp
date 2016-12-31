@@ -19,6 +19,10 @@
 					<td><input type="text" id="TITLE" name="TITLE" class="wdp_90"></input></td>
 				</tr>
 				<tr>
+					<th scope="row">글쓴이</th>
+					<td><input type="text" id="WRITER" name="WRITER" class="wdp_90"></input></td>
+				</tr>
+				<tr>
 					<td colspan="2" class="view_text"><textarea rows="20"
 							cols="100" title="내용" id="CONTENTS" name="CONTENTS"></textarea></td>
 				</tr>
@@ -51,10 +55,12 @@
 		     
 		    $("#write").on("click", function(e){ //작성하기 버튼
 		        e.preventDefault();
-		    	if(fn_checkForm() == true)
-		    		fn_insertBoard();
-		    	else
-            		alert("Input Form is Not Validate!!");
+
+	    		fn_insertBoard();
+		    	//if(fn_checkForm() == true)
+		    	//	fn_insertBoard();
+		    	//else
+            	//	alert("Input Form is Not Validate!!");
 		    });
 		});
 		 
@@ -72,6 +78,7 @@
 		 
         function fn_checkForm(){
         	if(gfn_isNull($("#TITLE").val()) == true) 		return false;
+        	if(gfn_isNull($("#WRITER").val()) == true) 		return false;
         	if(gfn_isNull($("#CONTENTS").val()) == true) 	return false;
         	if(fn_checkEmail() == false) 					return false;
         	if(gfn_isNull($("#PASSWORD").val()) == true) 	return false;
